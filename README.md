@@ -20,12 +20,17 @@
 | [`usermode_eac_app.md`](usermode_eac_app.md) | Ring3 EAC 服務 — 啟動流程、heartbeat 機制、反除錯、後端認證 |
 | [`vulnerabilities_and_gaps.md`](vulnerabilities_and_gaps.md) | 各子系統偵測缺口整理，附嚴重程度評級 |
 | [`usermode_techniques.md`](usermode_techniques.md) | 純 Ring3 手法 — 不需要 driver 就能在 EAC 保護的遊戲環境下操作的技術 |
+| [`eac_beginner_report_zh_tw.md`](eac_beginner_report_zh_tw.md) | 新手向總報告 — 用比較白話的方式整理 EAC 在做什麼、強在哪、哪些地方還有待驗證 |
 
 ---
 
 ## EAC 背景
 
 **Easy Anti-Cheat** 是一套 kernel-mode 反作弊系統，最初由 Kamu 開發，2018 年被 Epic Games 收購。目前部署在數百款遊戲中，包括 **Fortnite、Apex Legends、Rust、Dead by Daylight、The Finals、Naraka: Bladepoint** 等。只要你近期玩過競技 PC 遊戲，機器上幾乎肯定跑過 EAC 的 kernel driver。
+
+如果用比較白話的方式講，EAC 不是只有「一招很神」的那種產品。它比較像是把很多原本看起來普通的檢查，一層一層疊起來：看 process、看記憶體、看 driver、看簽章、看硬體、看遙測、看 user-mode 到 kernel-mode 的互信。單看某一項也許不稀奇，但全部疊起來就會變得很難搞。
+
+另外先提醒一件很重要的事：**EAC 不是每款遊戲都長一樣。** 近年的社群研究和官方產品路線都顯示，EAC 很可能會依遊戲、版本、風險等級調整 build、參數和啟用功能。所以你在別的文章看到的常數、IOCTL、行為，不一定能直接套回你手上的樣本。
 
 整個系統橫跨兩個權限層：
 
@@ -70,6 +75,8 @@
 
 核心工作都在 kernel driver 裡完成。它跑在 Ring-0，與 Windows 本身相同的權限層 — user-mode hook 無法攔截它，它發出的 API 呼叫也無法輕易被監控。要搞清楚它實際在做什麼，只能直接看 binary。
 
+不過這裡也要補一句近年的觀察：**只看靜態 binary，常常還不夠。** 有些社群 runtime dump 研究提到，driver 載入到記憶體後，體積、虛擬化區段、函式分派參數都可能跟硬碟上的靜態檔案不同。簡單講，硬碟上的檔案像是「還沒完全展開的版本」，真正跑起來之後可能又多一層。
+
 ---
 
 ## 分析樣本基本資訊
@@ -90,6 +97,8 @@
 | **特殊參考** | `0xFFFFF78000000014` = `KUSER_SHARED_DATA.TickCountLow` |
 
 最值得注意的一點：**完全沒有 import table**。每一個 Windows kernel API 呼叫都在執行時透過加密函式指標表進行。這是靜態分析困難的主要原因 — 光看 import 什麼都看不到，所有東西都被刻意藏起來了。詳細說明在 [crypto_and_obfuscation.md](crypto_and_obfuscation.md)。
+
+這也順便解釋了，為什麼近年的研究常常會把「匯入解析」「字串混淆」「執行時展開」「控制流虛擬化」放在很前面講。對 EAC 來說，先把自己藏好，本身就是防禦的一部分。
 
 ---
 
@@ -124,6 +133,29 @@
 - [已知偵測缺口 →](vulnerabilities_and_gaps.md)
 - [純使用者模式技術 →](usermode_techniques.md)
 - [完整函式位址對照表 →](function_map.md)
+- [新手向總報告 →](eac_beginner_report_zh_tw.md)
+
+---
+
+## 讀這份 repo 前先記住的三件事
+
+### 1. EAC 很強，但不是無敵
+
+Epic 官方自己的條款就有講，Anti-Cheat 服務是拿來**幫助**防止或偵測作弊，不保證一定有效，也不保證能攔住所有作弊。這份分析的目的，不是把 EAC 神化，而是把它實際做到的事拆給你看。
+
+### 2. 不同遊戲的 EAC，保護強度可能真的不同
+
+從近年的社群逆向觀察來看，熱門、對抗激烈、作弊多的遊戲，通常被認為保護會比較重；一些使用 EAC 的小型遊戲，配置可能就比較保守。這不代表一定如此，但拿來理解「為什麼不同研究結果差很多」很有幫助。
+
+### 3. 這份 repo 比較像「分析地圖」，不是最後結論
+
+這些章節把你帶到每條重要路徑前面，但有些地方目前還是比較適合寫成：
+
+- 已證實
+- 高可信觀察
+- 待驗證線索
+
+特別是像畫面擷取、輸出層檢查、不同 build 差異這些，都要保留一點彈性，才不會把社群推測寫成鐵律。
 
 ---
 

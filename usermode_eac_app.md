@@ -4,6 +4,8 @@
 
 多數人把注意力全放在 kernel driver 上，卻忽略了 user-mode EAC 服務同樣在做實質工作。本文分析 `EasyAntiCheat.exe` / `EasyAntiCheat_EOS.exe` — 它的實際功能、與 driver 的通訊方式、後端認證流程，以及最脆弱的環節在哪裡。
 
+先補一個很容易搞混的點：很多人以為 EAC 就是一個永遠常駐在背景的程式，但官方支援文件的說法其實比較接近「**有受保護遊戲啟動時才拉起服務元件，遊戲關掉後再停掉**」。所以 user-mode 服務不是純背景裝飾，它比較像是遊戲啟動流程中的中介、驗證者和網路出口。
+
 ---
 
 ## 目錄
@@ -56,6 +58,8 @@
 | `EasyAntiCheat.exe` | 舊版 EAC 服務 | 較舊的 EAC 遊戲（EOS 之前）|
 | `EasyAntiCheat_EOS.exe` | Epic Online Services 整合 | 現代 EAC（2021 年後）|
 | `EasyAntiCheat_Launcher.exe` | 遊戲啟動器包裝器 | 一些遊戲 |
+
+要注意的是，這三者雖然都掛著 EAC 名字，但實際功能分工與啟用時機可能會因遊戲而異。這也是近年很多社群分析彼此對不起來的原因之一：**研究者看到的，很可能根本不是同一套 build。**
 
 ---
 
@@ -114,6 +118,13 @@ DeviceIoControl(hDriver, IOCTL_EAC_HEARTBEAT,
 ```
 
 如果 user-mode process 被殺死、暫停，或 heartbeat 被延遲，driver 就會偵測到。這是 EAC 對**process 暫停攻擊**的防禦機制，攻擊者試圖「凍結」EAC 來阻止掃描。
+
+另外根據近年的社群觀察，EAC 的 user-mode ↔ kernel-mode 溝通**不一定只有一種資料型態**。比較合理的理解是：
+
+- 有些封包偏向握手 / 驗證 / challenge-response
+- 有些封包偏向實際資料搬運或遙測
+
+所以不要把所有 IOCTL 都想成「單純加密資料通道」，有些更像是在證明「現在這個 user-mode 端還是原本那個合法元件」。
 
 ---
 
