@@ -22,6 +22,7 @@
 | [`usermode_techniques.md`](usermode_techniques.md) | 純 Ring3 手法 — 不需要 driver 就能在 EAC 保護的遊戲環境下操作的技術 |
 | [`eac_beginner_report_zh_tw.md`](eac_beginner_report_zh_tw.md) | 新手向總報告 — 用比較白話的方式整理 EAC 在做什麼、強在哪、哪些地方還有待驗證 |
 | [`apex_dump.md`](apex_dump.md) | Apex dump 工具筆記 — 介紹 `CApexDumpWasm` 怎麼從 Apex 的 PE dump 裡抽 offset、RecvTable、DataMap 等資料 |
+| [`startup_runtime_analysis.md`](startup_runtime_analysis.md) | 啟動路徑補充筆記 — 整理 `EasyAntiCheat_EOS.sys` 在 startup 階段的 runtime 觀察與可信度判讀 |
 
 ---
 
@@ -136,6 +137,7 @@
 - [完整函式位址對照表 →](function_map.md)
 - [新手向總報告 →](eac_beginner_report_zh_tw.md)
 - [Apex dump 工具筆記 →](apex_dump.md)
+- [啟動路徑 Runtime 補充筆記 →](startup_runtime_analysis.md)
 
 ---
 

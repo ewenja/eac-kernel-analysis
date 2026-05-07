@@ -505,5 +505,5 @@
 ## 導航
 
 - 上一篇：[EAC 保護遊戲中的使用者模式技術 — 技術整理](usermode_techniques.md)
-- 下一篇：[EAC Kernel Driver 靜態分析筆記](README.md)
+- 下一篇：[EasyAntiCheat_EOS.sys 啟動路徑觀察 — Runtime 補充筆記](startup_runtime_analysis.md)
 - 回主索引：[README.md](README.md)
