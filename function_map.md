@@ -224,6 +224,10 @@
 
 ---
 
-*← [Spoofer 偵測](spoofer_detection.md) | [回到 README](README.md)*
+## 導航
+
+- 上一篇：[HWID 收集與 Spoofer 偵測 — 技術分析](spoofer_detection.md)
+- 下一篇：[外部作弊偵測 — 技術分析](external_cheat_detection.md)
+- 回主索引：[README.md](README.md)
 
 ---

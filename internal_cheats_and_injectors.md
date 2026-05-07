@@ -408,4 +408,8 @@ EAC 在遊戲啟動時初始化，但在遊戲自己的 loader 映射 DLL 和 EA
 
 ---
 
-*← [外部作弊偵測](external_cheat_detection.md) | [使用者模式 EAC 應用程式分析 →](usermode_eac_app.md)*
+## 導航
+
+- 上一篇：[外部作弊偵測 — 技術分析](external_cheat_detection.md)
+- 下一篇：[使用者模式 EAC 應用程式（Ring 3）— 技術分析](usermode_eac_app.md)
+- 回主索引：[README.md](README.md)

@@ -249,4 +249,8 @@ magic 值 `0xBC44A31CA74B4AAF` 在建立時被寫入 **EAC 主要 pool 分配的
 
 ---
 
-*← [IOCTL 與 Driver 追蹤](ioctl_and_driver_tracking.md) | [遙測 →](telemetry.md)*
+## 導航
+
+- 上一篇：[IOCTL 通訊與 Driver 追蹤 — 技術分析](ioctl_and_driver_tracking.md)
+- 下一篇：[遙測封包逐欄位分析 — 技術整理](telemetry.md)
+- 回主索引：[README.md](README.md)

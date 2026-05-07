@@ -1,4 +1,4 @@
-# EAC 保護遊戲中的使用者模式技術
+# EAC 保護遊戲中的使用者模式技術 — 技術整理
 
 > 本文是 [EAC Kernel Driver 分析](README.md) 系列的一部分。
 
@@ -364,4 +364,8 @@ while (VirtualQueryEx(hGame, (LPCVOID)addr, &mbi, sizeof(mbi)) == sizeof(mbi)) {
 
 ---
 
-*← [回到 README](README.md)*
+## 導航
+
+- 上一篇：[EAC 偵測缺口與弱點彙整 — 主要參考](vulnerabilities_and_gaps.md)
+- 下一篇：[Apex dump 工具筆記 — `CApexDumpWasm`](apex_dump.md)
+- 回主索引：[README.md](README.md)

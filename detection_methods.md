@@ -287,4 +287,8 @@ switch (selector - 1):
 
 ---
 
-*← [回到 README](README.md) | [IOCTL 與 Driver 追蹤 →](ioctl_and_driver_tracking.md)*
+## 導航
+
+- 上一篇：[EAC 總報告（新手也看得懂版）](eac_beginner_report_zh_tw.md)
+- 下一篇：[IOCTL 通訊與 Driver 追蹤](ioctl_and_driver_tracking.md)
+- 回主索引：[README.md](README.md)

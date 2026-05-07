@@ -258,4 +258,8 @@ DMA（Direct Memory Access）攻擊使用第二個 PCIe 裝置透過 PCIe 讀取
 
 ---
 
-*← [回到 README](README.md) | [內部作弊與注入器 →](internal_cheats_and_injectors.md)*
+## 導航
+
+- 上一篇：[函式位址對照表 — IDA 靜態分析結果](function_map.md)
+- 下一篇：[內部作弊與 DLL 注入器 — 技術分析](internal_cheats_and_injectors.md)
+- 回主索引：[README.md](README.md)

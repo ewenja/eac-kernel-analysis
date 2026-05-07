@@ -253,4 +253,8 @@
 
 ---
 
-*← [使用者模式 EAC 應用程式](usermode_eac_app.md) | [回到 README](README.md)*
+## 導航
+
+- 上一篇：[使用者模式 EAC 應用程式（Ring 3）— 技術分析](usermode_eac_app.md)
+- 下一篇：[EAC 保護遊戲中的使用者模式技術 — 技術整理](usermode_techniques.md)
+- 回主索引：[README.md](README.md)

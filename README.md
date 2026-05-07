@@ -21,6 +21,7 @@
 | [`vulnerabilities_and_gaps.md`](vulnerabilities_and_gaps.md) | 各子系統偵測缺口整理，附嚴重程度評級 |
 | [`usermode_techniques.md`](usermode_techniques.md) | 純 Ring3 手法 — 不需要 driver 就能在 EAC 保護的遊戲環境下操作的技術 |
 | [`eac_beginner_report_zh_tw.md`](eac_beginner_report_zh_tw.md) | 新手向總報告 — 用比較白話的方式整理 EAC 在做什麼、強在哪、哪些地方還有待驗證 |
+| [`apex_dump.md`](apex_dump.md) | Apex dump 工具筆記 — 介紹 `CApexDumpWasm` 怎麼從 Apex 的 PE dump 裡抽 offset、RecvTable、DataMap 等資料 |
 
 ---
 
@@ -134,6 +135,7 @@
 - [純使用者模式技術 →](usermode_techniques.md)
 - [完整函式位址對照表 →](function_map.md)
 - [新手向總報告 →](eac_beginner_report_zh_tw.md)
+- [Apex dump 工具筆記 →](apex_dump.md)
 
 ---
 
@@ -160,3 +162,11 @@ Epic 官方自己的條款就有講，Anti-Cheat 服務是拿來**幫助**防止
 ---
 
 *使用 IDA Pro 8.x + Hex-Rays decompiler 進行靜態分析。所有位址對應本次分析的特定 binary — EAC 更新頻繁，位址會隨版本變動，但整體架構保持一致。*
+
+---
+
+## 導航
+
+- 上一篇：[根目錄 README](../README.md)
+- 下一篇：[EAC 總報告（新手也看得懂版）](eac_beginner_report_zh_tw.md)
+- 回根目錄：[../README.md](../README.md)

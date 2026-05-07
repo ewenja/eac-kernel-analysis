@@ -244,4 +244,8 @@ IOCTL_NDIS_QUERY_GLOBAL_STATS
 
 ---
 
-*← [回到 README](README.md) | [加密與混淆 →](crypto_and_obfuscation.md)*
+## 導航
+
+- 上一篇：[EAC 偵測機制 — 技術分析](detection_methods.md)
+- 下一篇：[加密實作與混淆手法 — 技術分析](crypto_and_obfuscation.md)
+- 回主索引：[README.md](README.md)

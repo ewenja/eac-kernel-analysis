@@ -310,4 +310,8 @@ EAC 的複合 hash 包含**極難同時偽造的來源**：
 
 ---
 
-*← [遙測](telemetry.md) | [函式對照表 →](function_map.md)*
+## 導航
+
+- 上一篇：[遙測封包逐欄位分析 — 技術整理](telemetry.md)
+- 下一篇：[函式位址對照表 — IDA 靜態分析結果](function_map.md)
+- 回主索引：[README.md](README.md)

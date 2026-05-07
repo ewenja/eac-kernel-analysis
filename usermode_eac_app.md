@@ -327,4 +327,8 @@ EAC 的 heartbeat 機制意味著你不能無限期暫停 EAC process。但 hype
 
 ---
 
-*← [內部作弊與注入器](internal_cheats_and_injectors.md) | [漏洞主列表 →](vulnerabilities_and_gaps.md)*
+## 導航
+
+- 上一篇：[內部作弊與 DLL 注入器 — 技術分析](internal_cheats_and_injectors.md)
+- 下一篇：[EAC 偵測缺口與弱點彙整 — 主要參考](vulnerabilities_and_gaps.md)
+- 回主索引：[README.md](README.md)

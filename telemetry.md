@@ -1,4 +1,4 @@
-# 遙測封包逐欄位分析
+# 遙測封包逐欄位分析 — 技術整理
 
 > 本文是 [EAC Kernel Driver 靜態分析](README.md) 系列的一部分。
 
@@ -296,4 +296,8 @@ if (v26) {
 
 ---
 
-*← [加密與混淆](crypto_and_obfuscation.md) | [Spoofer 偵測 →](spoofer_detection.md)*
+## 導航
+
+- 上一篇：[加密實作與混淆手法 — 技術分析](crypto_and_obfuscation.md)
+- 下一篇：[HWID 收集與 Spoofer 偵測 — 技術分析](spoofer_detection.md)
+- 回主索引：[README.md](README.md)
