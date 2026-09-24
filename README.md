@@ -1,6 +1,6 @@
 # Easy Anti-Cheat — Kernel Driver 靜態分析筆記
 
-> **免責聲明：** 本 repo 僅供安全研究與教育用途。所有內容均來自對公開發行 kernel driver 的靜態逆向工程，分析工具為 IDA Pro。本 repo 不包含任何作弊程式、漏洞利用或繞過手段，也無意提供此類內容。這類分析對安全研究人員、遊戲開發者及 kernel 安全領域的從業者均有參考價值。所有商標歸各自所有者所有。
+> **免責聲明：** 本 repo 僅供安全研究與教育用途。內容以對公開發行 kernel driver 的靜態逆向工程、執行時觀察，以及公開社群資料的交叉判讀為主，分析工具為 IDA Pro、radare2 等。本 repo **不包含任何作弊程式，也不提供任何繞過手法**；書中引用的第三方社群發言（例如 [社群訊號判讀](eac_tiers_and_community_signal_zh_tw.md) 的附錄）僅為來源存檔與判讀材料，已標示作者與出處，不代表本 repo 的立場或建議。這類分析對安全研究人員、遊戲開發者及 kernel 安全領域的從業者均有參考價值。所有商標歸各自所有者所有。
 
 ---
 
@@ -28,6 +28,7 @@
 | [`uc_eos_driver_writeup_zh_tw.md`](uc_eos_driver_writeup_zh_tw.md) | 外部研究導讀 — UnKnoWnCheaTs 社群對 EOS driver 的硬體身分蒐集、核心遙測與 CPU 探針長篇研究，重點整理＋章節對照 |
 | [`uc_eos_driver_writeup_original_en.md`](uc_eos_driver_writeup_original_en.md) | 上述外部研究的原文逐字封存（英文）＋討論串索引；**外部資料，非本 repo 驗證結果** |
 | [`CHANGELOG.md`](CHANGELOG.md) | 本資料夾（發布單位）的更新紀錄 |
+| [`eac_tiers_and_community_signal_zh_tw.md`](eac_tiers_and_community_signal_zh_tw.md) | 社群訊號判讀 — 「免費版 vs 完整版」討論的交叉比對：串裡說法 vs 本資料夾的證據、逐條判定，以及「裝了不等於開了」的實例 |
 
 ---
 
@@ -149,6 +150,7 @@
 - [新版樣本白話導讀 →](eos_sys_beginner_walkthrough_zh_tw.md)
 - [外部研究導讀：EOS driver 的硬體身分蒐集、核心遙測與 CPU 探針 →](uc_eos_driver_writeup_zh_tw.md)
 - [上述外部研究原文封存 →](uc_eos_driver_writeup_original_en.md)
+- [社群訊號判讀：EAC 分級與「裝了不等於開了」 →](eac_tiers_and_community_signal_zh_tw.md)
 
 ---
 

@@ -12,6 +12,7 @@
 
 - 新增 [uc_eos_driver_writeup_zh_tw.md](uc_eos_driver_writeup_zh_tw.md) — UnKnoWnCheaTs（Anti-Cheat Research #772181）那篇長篇 EOS driver runtime 研究的中文導讀。內容包含來源標註、KEVLAR 模擬環境的實驗方式與三種證據等級、13 個主題的重點整理（初始化 61 秒時間預算、worker 樹、硬體與開機信任狀態、PCI/ACPI/MMIO、GPU 物件到 XXTEA 加密紀錄的鏈路、PiDDB 與 loader 視角、行程映像檢查、ETW 遙測、反虛擬化 CPU 探針、win32k 暫時 callback slot 與 stack walk 證據、裝置介面與 IOCTL 候選、卸載殘留、覆蓋率現況）、與本資料夾各章節的對照表，以及外部質疑與閱讀注意事項。
 - 新增 [uc_eos_driver_writeup_original_en.md](uc_eos_driver_writeup_original_en.md) — 上述研究的原文逐字封存（原作者四篇長文：主文、9/17 更新、9/22 兩篇補充章節），並附 72 篇討論串索引。**這是外部來源，不是本資料夾的驗證結果。**
+- 新增 [eac_tiers_and_community_signal_zh_tw.md](eac_tiers_and_community_signal_zh_tw.md) — 把 UnKnoWnCheaTs 討論串 #772975（*EAC free version detection vectors*，提問串）做成**來源判讀**：9 條「串裡說法 vs 本資料夾證據」的逐條判定（一致／不符／未證實）、「裝了不等於開了」的實例（test-signing 觀測的真正解釋）、模擬器工具鏈現況（KEVLAR、kernemul），以及讀社群串的三個檢查點。
 
 ### 回復
 
@@ -32,3 +33,4 @@
 
 - 本資料夾內的所有 Markdown 連結都指向資料夾內部：整包丟上 GitHub 即可獨立閱讀，不需要根目錄的任何檔案。
 - 原文封存檔中的 `C:\Windows\...` 等路徑是原作者文章的一部分，屬於引用內容，刻意保持原樣。
+- 免責聲明配合本次新增調整措辭：原本寫「不包含任何作弊程式、漏洞利用或繞過手段」，但新章附錄逐字節錄了一段第三方社群的規避建議，因此改為「不包含任何作弊程式，也不提供任何繞過手法；引用的第三方發言僅為來源存檔與判讀材料，已標示作者與出處，不代表本 repo 立場」。若之後決定移除該附錄，這行可直接改回原句。
