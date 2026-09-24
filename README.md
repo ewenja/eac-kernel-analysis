@@ -23,6 +23,11 @@
 | [`eac_beginner_report_zh_tw.md`](eac_beginner_report_zh_tw.md) | 新手向總報告 — 用比較白話的方式整理 EAC 在做什麼、強在哪、哪些地方還有待驗證 |
 | [`apex_dump.md`](apex_dump.md) | Apex dump 工具筆記 — 介紹 `CApexDumpWasm` 怎麼從 Apex 的 PE dump 裡抽 offset、RecvTable、DataMap 等資料 |
 | [`startup_runtime_analysis.md`](startup_runtime_analysis.md) | 啟動路徑補充筆記 — 整理 `EasyAntiCheat_EOS.sys` 在 startup 階段的 runtime 觀察與可信度判讀 |
+| [`eos_sys_2026_05_static_revalidation.md`](eos_sys_2026_05_static_revalidation.md) | 新版 `EasyAntiCheat_EOS.sys` 樣本再驗證 — 校正 import、section 角色與殼層次的樣本差異 |
+| [`eos_sys_beginner_walkthrough_zh_tw.md`](eos_sys_beginner_walkthrough_zh_tw.md) | 新版 `EasyAntiCheat_EOS.sys` 白話導讀 — 用新手也能跟上的方式整理這一輪靜態重驗證目前已經證明的重點 |
+| [`uc_eos_driver_writeup_zh_tw.md`](uc_eos_driver_writeup_zh_tw.md) | 外部研究導讀 — UnKnoWnCheaTs 社群對 EOS driver 的硬體身分蒐集、核心遙測與 CPU 探針長篇研究，重點整理＋章節對照 |
+| [`uc_eos_driver_writeup_original_en.md`](uc_eos_driver_writeup_original_en.md) | 上述外部研究的原文逐字封存（英文）＋討論串索引；**外部資料，非本 repo 驗證結果** |
+| [`CHANGELOG.md`](CHANGELOG.md) | 本資料夾（發布單位）的更新紀錄 |
 
 ---
 
@@ -98,7 +103,9 @@
 | **程式碼簽名** | 有效的 Microsoft Authenticode/WHQL 簽名 |
 | **特殊參考** | `0xFFFFF78000000014` = `KUSER_SHARED_DATA.TickCountLow` |
 
-最值得注意的一點：**完全沒有 import table**。每一個 Windows kernel API 呼叫都在執行時透過加密函式指標表進行。這是靜態分析困難的主要原因 — 光看 import 什麼都看不到，所有東西都被刻意藏起來了。詳細說明在 [crypto_and_obfuscation.md](crypto_and_obfuscation.md)。
+最值得注意的一點，是舊主樣本幾乎把 import surface 壓到看不見。每一個 Windows kernel API 呼叫大多都在執行時透過加密函式指標表進行。這是靜態分析困難的主要原因 — 光看 import 往往看不到主要能力，很多東西都被刻意藏起來了。詳細說明在 [crypto_and_obfuscation.md](crypto_and_obfuscation.md)。
+
+另外補一個很重要的樣本差異：本 repo 早期主樣本可描述為「無 import / 幾乎無 import」；但較新的 `2026-03-11` `EasyAntiCheat_EOS.sys` 樣本已可觀察到極小 import table（至少包含 `FltRegisterFilter` 與 `__chkstk`）。這代表 **「沒有 import」不能再被當成所有 EAC build 的通則**。詳見 [eos_sys_2026_05_static_revalidation.md](eos_sys_2026_05_static_revalidation.md)。
 
 這也順便解釋了，為什麼近年的研究常常會把「匯入解析」「字串混淆」「執行時展開」「控制流虛擬化」放在很前面講。對 EAC 來說，先把自己藏好，本身就是防禦的一部分。
 
@@ -138,6 +145,10 @@
 - [新手向總報告 →](eac_beginner_report_zh_tw.md)
 - [Apex dump 工具筆記 →](apex_dump.md)
 - [啟動路徑 Runtime 補充筆記 →](startup_runtime_analysis.md)
+- [新版樣本靜態再驗證 →](eos_sys_2026_05_static_revalidation.md)
+- [新版樣本白話導讀 →](eos_sys_beginner_walkthrough_zh_tw.md)
+- [外部研究導讀：EOS driver 的硬體身分蒐集、核心遙測與 CPU 探針 →](uc_eos_driver_writeup_zh_tw.md)
+- [上述外部研究原文封存 →](uc_eos_driver_writeup_original_en.md)
 
 ---
 
@@ -169,6 +180,6 @@ Epic 官方自己的條款就有講，Anti-Cheat 服務是拿來**幫助**防止
 
 ## 導航
 
-- 上一篇：[根目錄 README](../README.md)
 - 下一篇：[EAC 總報告（新手也看得懂版）](eac_beginner_report_zh_tw.md)
-- 回根目錄：[../README.md](../README.md)
+- 更新紀錄：[CHANGELOG.md](CHANGELOG.md)
+- 回索引：本頁（本資料夾的總索引）

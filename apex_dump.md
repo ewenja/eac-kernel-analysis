@@ -437,7 +437,7 @@
 
 如果有人是為了研究 Apex 環境才來看這個 repo，我會建議這樣讀：
 
-1. 先讀 [apex dump.md](apex%20dump.md)  
+1. 先讀 [apex_dump.md](apex_dump.md)  
    先知道 `CApexDumpWasm` 到底能抽出什麼、它看的是哪層資料
 
 2. 再讀 [eac_beginner_report_zh_tw.md](eac_beginner_report_zh_tw.md)  

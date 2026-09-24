@@ -40,7 +40,7 @@
 1. [KUSER_SHARED_DATA — 免費的時序資訊](#1-kuser_shared_data--免費的時序資訊)
 2. [不需要 PROCESS_VM_READ 的遊戲基址](#2-不需要-process_vm_read-的遊戲基址)
 3. [NtQuerySystemInformation Handle 列舉](#3-ntquerysysteminformation-handle-列舉)
-4. [ETW — 遊戲洩漏很多資訊](#4-etw--遊戲洩漏很多資訊)
+4. [ETW — 遊戲洩漏的資訊](#4-etw--遊戲洩漏的資訊)
 5. [RawInput 攔截](#5-rawinput-攔截)
 6. [從同一個 Desktop 使用 SetWindowsHookEx](#6-從同一個-desktop-使用-setwindowshookex)
 7. [遊戲建立的共享記憶體 Section](#7-遊戲建立的共享記憶體-section)
@@ -48,7 +48,7 @@
 9. [不需要注入的視窗 / DWM 資訊](#9-不需要注入的視窗--dwm-資訊)
 10. [透過 SendInput 注入輸入](#10-透過-sendinput-注入輸入)
 11. [VirtualQueryEx — 不讀取記憶體的記憶體佈局](#11-virtualqueryex--不讀取記憶體的記憶體佈局)
-12. [為什麼這些對 EAC 有效](#12-為什麼這些對-eac-有效)
+12. [為什麼這些技術對 EAC 有效](#12-為什麼這些技術對-eac-有效)
 
 ---
 
