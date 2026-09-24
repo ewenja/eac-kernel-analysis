@@ -68,6 +68,25 @@ ETW 遙測、反虛擬化 CPU 探針」各條路徑上實際做了什麼。
 - 輸入不是單一次開機的完整快照，而是「授權擷取 ＋ 一份舊 kernel dump ＋ 建模的行程狀態」
 - C317 這個主 run 內含**加速執行與語意重播（semantic replay）**；被重播的操作不算成「又一次獨立執行」
 
+**那 KEVLAR 到底被改了多少？** 作者在 2026-09-15 的一篇回覆裡（貼文編號 `4800440`）自己列了一份清單，
+目標寫得很直白：*「讓沙箱與宿主機盡可能 1:1 對齊」*。這份清單值得看，因為它直接對應到「哪些數值是模擬出來的」：
+
+| 面向 | 內容 |
+|---|---|
+| KEVLAR — Windows 環境 | 補上建模的 kernel state、行程、模組、registry、檔案、裝置與硬體回應，讓 EOS 能看到一個「講得通」的環境 |
+| KEVLAR — Kernel API | 補實作缺的呼叫，並修正結構、回傳值、輸出緩衝、handle 與物件生命週期 |
+| KEVLAR — Memory | 修正權限、lazy page 載入、行程掛載、physical-memory alias，以及不同映射之間的一致性 |
+| KEVLAR — Scheduling | 修正 worker 執行、阻塞等待、週期 timer、跨處理器 callback 與卸載順序 |
+| KEVLAR — CPU 行為 | 新增或修正特權指令、MSR、debug state、效能計數器、processor tracing、例外投遞 |
+| KEVLAR — Virtual time | 讓時戳、共享時鐘與排程 deadline 一致（含依時間而定的初始化行為） |
+| KEVLAR — OS 互動 | 實作 callback 投遞，修正 registry 通知、IRP dispatch/completion、cancellation 與 storage 回應 |
+| KEVLAR — 加速調查 | 降低 mapping／hook 開銷、加上受控最佳化；**durable checkpoint 仍未實作** |
+| Unicorn — 正確性 | 修正 AVX/SSE state、upper vector lanes、`PUSHF`、`CR8`、delivered-exception state 與時戳觀測邊界 |
+| Unicorn — 觀測與效能 | 加上 MSR hook、branch stepping、instruction-retirement 觀測；最佳化 memory-map 查找 |
+
+換句話說：**這份研究的「執行環境」本身就是一個被大量補強過的作品**，而清單上沒有的東西，
+就是它當時還做不到的事 —— 這也解釋了為什麼作者要一直強調「modeled response」的界線。
+
 ### 這篇自己把證據分成三種（這點值得學）
 
 | 證據種類 | 意思 |
@@ -369,15 +388,24 @@ kernel-image 通知覆蓋、憑證／信任決策邏輯、正常 user-mode IOCTL
 
 一篇會被收進 repo 的外部研究，重點不只是作者說了什麼，還包括別人怎麼挑戰它：
 
-- 有回覆者（`alexanderyy`）主張真實環境下 EAC 會用 `RtlVirtualUnwind` 與 `RtlLookupFunctionEntry`
-  做 hook 檢查（連 EPT hook 都能抓），懷疑 KEVLAR 沒收到這些呼叫，並附上 Rust 版 EAC 的 RVAs。
-  作者的答覆是：有**手寫 unwinder** 的明顯跡象，但現有證據不足以確認；
-  同時也承認模擬環境「可能沒有跑到完整行為」是這類方法的固有風險。
-- 同一串裡也有 `ExFreePool` 提出 `KernelMul` 之類的替代工具建議。
+- 有回覆者（`alexanderyy`，2026-09-16）主張真實環境下 EAC 會用 `RtlVirtualUnwind` 與
+  `RtlLookupFunctionEntry` 做 hook 檢查（連 EPT hook 都能抓），懷疑 KEVLAR 沒收到這些呼叫，
+  並附上 Rust 版 EAC 的 RVAs。
+- 作者的回覆（貼文編號 **4801129** / **4801141**）比一般摘要寫得具體，值得完整看一次：
+  - 他認為有**手寫 unwinder** 的明顯跡象，但「不敢說 100% 可用、沒有但書」；
+    手動走訪的邏輯本身被虛擬化，而抓 `PRUNTIME_FUNCTION` 的函式只是混淆（Rust 版某個 RVA 約在 `0x1400DB6FF`）。
+  - EOS 有自己版本的 `RtlCaptureContext`（與 `RtlCaptureContext` 幾乎相同），
+    作者還提供了可直接在 driver 內搜尋的 byte signature。
+  - 對於「為什麼記錄不到呼叫」，他的假設是**被 EAC inline 掉了**，所以模擬器不會記錄到；
+    同時也承認模擬環境可能沒跑到完整行為。
+  - 他也說明了為什麼只跑 30 分鐘虛擬時間：這些函式「應該一開始就會被呼叫」。
+  - 當時仍未解的其中一項是 **NMI storm**：他明說要查的是「在什麼條件下才會發生」。
+- 同一串裡也有 `ExFreePool` 提出 `KernelMul`、`notaskid65` 提出 kernemul 之類的替代工具建議
+  （模擬器工具鏈的現況整理在 [eac_tiers_and_community_signal_zh_tw.md](eac_tiers_and_community_signal_zh_tw.md)）。
 - 有人直接問 pt. 2 會不會談「比賽開始後 runtime 對裝置做了什麼」；作者回覆 pt. 2 會先簡短交代
   user-mode 服務與 EOS bootstrapper，重點放在手動映射的 EOS payload 與 heartbeat 邏輯。
 
-這種「外部提出反例 → 作者更新證據邊界」的來回，本身就是這篇值得留存的原因。
+這種「外部提出反例 → 作者更新證據邊界」的來回，本身就是這篇值得留存的原因；導讀與原文封存都保留了兩邊的說法。
 
 ---
 
@@ -392,8 +420,10 @@ kernel-image 通知覆蓋、憑證／信任決策邏輯、正常 user-mode IOCTL
 4. **populated PiDDB 走訪不是同一次開機。** 那 20 筆／6 筆格式化紀錄來自帶還原歷史快取的 run，
    開機條件與主 run 不同，不能當成同一次開機的異常。
 5. **計時類數值受模擬器政策影響。** 150 vs 1 是 `SampleVirtualTsc` 的最低值政策，不是真機的 150 倍差異。
-6. **它是一份 AI 協助撰寫的長文。** 資料來源是作者的追蹤，但敘述由 AI 整理；
-   引用時建議回溯到原始指令與事件編號，而不是只引句子。
+6. **它是一份 AI 協助撰寫的長文，而且 AI 出過事。** 作者自己在第 3 篇回覆裡說，AI「刪掉了一些
+   很重要的資訊」（他舉的例子是**所有 MMIO 存取、PCI config 讀取**等），他之後才回頭修補
+   （貼文編號 `4800179`）。也就是說：資料是真的，但**這份 writeup 的完整度曾經被 AI 影響過**。
+   引用時請回溯到原始指令與事件編號，不要只引句子。
 7. **不是本 repo 的驗證結果。** 這頁只是導讀，本 repo 沒有重現其中任何一項。
 
 ---
@@ -411,9 +441,12 @@ kernel-image 通知覆蓋、憑證／信任決策邏輯、正常 user-mode IOCTL
 
 ## 原文全文
 
-逐字封存在這裡（含作者四篇長文與討論串索引）：
+逐字封存在這裡（含作者四篇長文、作者其餘 12 篇回覆、以及 72 篇討論串索引）：
 
 - [uc_eos_driver_writeup_original_en.md](uc_eos_driver_writeup_original_en.md)
+  - **Post #1／#44／#61／#64**：四篇長文
+  - **附錄 B**：作者其餘 12 篇回覆 —— 導讀引用的 `4800440`（KEVLAR 改造清單）、`4800179`（AI 刪過內容）、`4801129`／`4801141`（unwinder 討論）都在這裡
+  - **附錄 A**：討論串完整索引（72 篇，含作者、時間與摘要）
 
 原始出處：
 

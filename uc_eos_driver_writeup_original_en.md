@@ -10,7 +10,12 @@
 > | 原始網址 | <https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes.html> |
 > | 發文時間 | 主文 2026-09-15；更新 2026-09-17；補充章節 2026-09-22（GMT） |
 > | 封存時間 | 2026-09-24 |
-> | 封存範圍 | 原作者 lauralex 在本討論串中的四篇長文（其餘為社群回覆，見文末索引） |
+> | 封存範圍 | 原作者 lauralex 的四篇長文（Post #1／#44／#61／#64）＋ 他在本串的其餘 **12 篇回覆**（見文末附錄 B）；其他作者的發言見附錄 A 索引 |
+> | 擷取方式 | 討論串正常檢視（showthread）4 頁、共 72 篇，機械化轉為 Markdown |
+> | 內容比對 | 2026-09-24 重新抓取全部 4 頁後，以「忽略空白與標點」的字元流比對：Post #44／#61／#64 與線上版本**完全相同**，Post #1 的線上內容亦**完整包含**於本檔；文末索引 72 列的摘要也逐列驗證過可在對應貼文中找到 |
+>
+> **重抓請注意：** 論壇的 print view 對超長貼文會**在伺服器端截斷**（實測 Post #1 只回傳約 16K／170K 字元，
+> 而且斷在句子中間）。本檔是以討論串正常檢視擷取的；日後若要自行重抓，請用討論串頁面而不是 print view。
 >
 > 內容著作權屬原作者所有，這裡只是研究用途的引用存檔。**本 repo 不對文中任何結論背書**，
 > 原始數據是在模擬環境（KEVLAR）中產生的，閱讀時請務必搭配
@@ -21,6 +26,9 @@
 ---
 
 ## 封存的四篇貼文
+
+> 這四篇是本串的主體。原作者其餘 12 篇較短的回覆（含本導讀引用的 KEVLAR 改造清單、AI 自述、
+> unwinder 討論）收在文末 **[附錄 B](#附錄-b原作者的其他回覆12-篇)**；其餘成員的發言收在 **[附錄 A](#附錄-a討論串完整索引72-篇)**。
 
 | # | 時間（GMT） | 標題／內容 | 字元數 |
 |---|---|---|---|
@@ -7980,84 +7988,328 @@ Persistent-thread-state acquisition
 
 ---
 
-## 附錄：討論串完整索引（72 篇）
+---
+
+## 附錄 B：原作者的其他回覆（12 篇）
+
+以下是 lauralex 在四篇長文之外、於同一討論串內的其餘發言（依時間排序，逐字節錄）。
+導讀引用的貼文編號（`4800440`、`4800179`、`4801129`、`4801141`）都在這裡。
+引言區塊以 `[quote]` 標示，內容屬被引用的原作者。
+
+### 4800179 — 2026-09-15 14:28（回覆 SecretPaster — 承認 writeup 被 AI 刪掉內容，之後會修）
+
+[quote]
+
+					Originally Posted by **SecretPaster**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4800176.html#post4800176)
+
+				Missed quite a bit, but this is actually useful compared to what was released here the past year. Good job
+
+Yeah, this is only pt.1, also I [removed]ed up the writeup. I'm gonna fix it, there's some stuff missing. [removed]ing AI deleted some really important information for some reason (e.g., all MMIO accesses, PCI config reads and more...)
+
+### 4800235 — 2026-09-15 15:37（回覆 FUSEdev — 每次 run 的 log 約 50 GB）
+
+[quote]
+
+					Originally Posted by **FUSEdev**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4800184.html#post4800184)
+
+				could you perchance upload some of the logs?
+
+Unfortunately the log file of each run is approximately 50 GB
+
+This image has been resized. Click this bar to view the full image. The original image is sized 1193x64.
+
+### 4800440 — 2026-09-15 19:33（回覆 lolz5465az — KEVLAR 與 Unicorn 到底改了哪些東西（本導讀有引用））
+
+[quote]
+
+					Originally Posted by **lolz5465az**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4800386.html#post4800386)
+
+				very beautiful post, nice job using the tool like it was intended!
+
+curious, i dont get half of these in my vm im working on for eac reversal, can i ask what did you modify?
+
+alot of really nice info here though, good job
+
+- KEVLAR — Windows environment: Added captured and modeled kernel state, processes, modules, registry keys, files, devices and hardware responses so EOS could inspect a coherent Windows environment.
+- KEVLAR — Kernel APIs: Implemented missing calls and corrected their structures, return values, output buffers, handles and object lifetimes.
+- KEVLAR — Memory: Fixed permissions, lazy page loading, process attachment, physical-memory aliases and coherence between different mappings.
+- KEVLAR — Scheduling: Fixed worker execution, blocking waits, periodic timers, cross-processor callbacks and unload ordering.
+- KEVLAR — CPU behavior: Added or corrected privileged instructions, MSRs, debug state, performance counters, processor tracing and exception delivery.
+- KEVLAR — Virtual time: Made timestamps, shared clocks and scheduler deadlines consistent, including timing-dependent initialization.
+- KEVLAR — OS interactions: Implemented callback delivery and corrected registry notifications, IRP dispatch/completion, cancellation and captured storage responses.
+- KEVLAR — Faster investigation: Reduced mapping and hook overhead, added guarded optimizations, and allowed eligible missing-provider/MSR repairs to resume a resident run. Durable checkpoints are still unimplemented.
+- Unicorn — Correctness patches: Fixed AVX/SSE state, upper vector lanes, PUSHF, CR8, delivered-exception state and timestamp observation boundaries.
+- Unicorn — Instrumentation and performance: Added MSR hooks, branch stepping and instruction-retirement observation; optimized memory-map lookups and inactive hook traversal.
+
+The idea is to have a sandbox as close as possible as the host machine, mirroring the host machine's state 1:1 (or very close) under each aspect.
+
+### 4800462 — 2026-09-15 20:04（回覆 jaydipm / Heashey / FUSEdev — pt.2 方向，log 只能提供子集）
+
+[quote]
+
+					Originally Posted by **jaydipm**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4800417.html#post4800417)
+
+				ur so cool and it's actually formatted nicely even though its massive. see, if you use ai, please use it like this instead of just posting slop that no one wants to read, and pls part two
+
+thx. Now that AI is a public resource, the quality is based on how well you use this resource. Part 2 will be focused on the interaction with the EOS service and the EOS manually-mapped user-mode module.
+
+[quote]
+					Originally Posted by **Heashey**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4800455.html#post4800455)
+
+				felt like i was scrolling for a year, but anyway there is some good information
+
+xDxDxDxDxD
+
+[quote]
+					Originally Posted by **FUSEdev**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4800403.html#post4800403)
+
+				ohhh, so there isnt any way to get the logs, right? except if we do the modification exactly as you did, right?
+
+Mmmmh, surely not the full logs, but only a subset of them, unless I share my drive via NFS xDxD.
+
+This image has been resized. Click this bar to view the full image. The original image is sized 855x24.
+
+This image has been resized. Click this bar to view the full image. The original image is sized 918x31.
+
+### 4800707 — 2026-09-16 00:30（回覆 xSquad — TPM public material，並宣告 OP 會持續更新）
+
+[quote]
+
+					Originally Posted by **xSquad**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4800583.html#post4800583)
+
+				The **TPM public material** is similar to what I posted before btw if you capture it at runtime.
+
+Yeah, I read it. I might do some runtime inspection in pt. 2, especially for the usermode component.
+
+BTW, the OP is going to be continuously updated and refined!
+
+### 4800988 — 2026-09-16 09:26（回覆 xSquad — 下次更新會針對未到達的程式碼路徑，正在做覆蓋率統計與 input fuzzing）
+
+[quote]
+
+					Originally Posted by **xSquad**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4800709.html#post4800709)
+
+				Seems like they are doing the same for Rust (the game) and Fortnite related to their TPM.
+
+Yep. Also, next writeup update will be focused on the unreached code paths. Right now I'm measuring some statistics about the execution coverage and doing some input fuzzing to let the emulator reach undiscovered branches.
+
+### 4801129 — 2026-09-16 13:35（回覆 alexanderyy — 手寫 unwinder 的跡象、copy-cat RtlCaptureContext、inline 假設（本導讀有引用））
+
+[quote]
+
+					Originally Posted by **alexanderyy**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4801107.html#post4801107)
+
+				EAC uses RtlVirtualUnwind and RtlLookupFunctionEntry, KEVLAR might not be picking it up. But in a real enviroment it does. Unvirtualized parts show them using these 2 for checking for hooks that works for even EPT hooks plus wrapper functions for calling them
+
+There are very clear indications of some sort of manual unwinder, not enough for me to say it is 100% operational with no caveats. Since the actual logic that walks it manually is virtualized, while some of the functions grabbing PRUNTIME_FUNCTION data is only obfuscated (1400DB6FF latest rust build). They have their own copy cat version of CaptureContext, basically the exact same as RtlCaptureContext. Just search for this sig in driver (48 89 41 ? 48 89 89 ? ? ? ? 48 89 91 ? ? ? ? 4C 89 81 ? ? ? ? 4C 89 89 ? ? ? ? 4C 89 91 ? ? ? ? 4C 89 99 )
+
+Yeah, trying to figure out why they're not called. Maybe they're inlined by EAC, so KEVLAR won't log them obviously.
+
+### 4801141 — 2026-09-16 13:50（回覆 alexanderyy — 為什麼只跑 30 分鐘虛擬時間；NMI storm 仍未解（本導讀有引用））
+
+[quote]
+
+					Originally Posted by **alexanderyy**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4801132.html#post4801132)
+
+				Here are the RVA's for them on the latest EAC rust version, if it is any help
+
+RtlVirtualUnwind
+
+~~~
+DD257
+1DD52D
+3F0E00
+~~~
+
+RtlLookupFunctionEntry
+
+~~~
+DBF34
+422B26
+40D756
+1DD453
+45DDD
+45FD2
+3DD68A
+38D371
+37BA64
+37BA64
+~~~
+
+You are also missing a lot of other stuff, i think eac is not running fully in your enviroment. But good work, nice to see some at least trying on here
+
+Thx. Also, I let the emulator run for 30 virtual minutes, I guess I don't need to extend it to 1 hour, those functions should be called from the start I think. Some stuff that I'm missing is for example the NMIs storm, but I have to figure out if that happens under specific conditions and what these conditions are, or if they're triggered by the usermode manually-mapped module indirectly...
+
+### 4803166 — 2026-09-18 14:49（回覆 FUSEdev — pt.2 規劃、SOGEN，以及 EOS payload 的解密演算法）
+
+[quote]
+
+					Originally Posted by **FUSEdev**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4803114.html#post4803114)
+
+				Have you also thought about doing this analysis on their usermode? you could use something like SOGEN (on github) for that. its a really nice project, but you will need to modify it quite a bit
+
+yes, usermode part will be in pt. 2, it will focus on the usermode service (EasyAntiCheat_EOS.exe) and the manually mapped code (into the game) and all the heartbeat logic, etc.
+For the usermode service, probably SOGEN isn't even needed, IDA analysis + a little bit of dynamic analysis should be enough.
+For the usermode manually mapped code (which I think is scattered across various memory regions), I could use SOGEN, with some adjustments probably.
+
+Btw, the decryption algorithm for the EOS payload has been always the same for years:
+
+~~~
+import sys
+
+def decrypt(buf: bytearray) -> None:
+    """In-place decryption."""
+    n = len(buf)
+    if n < 2:
+        return
+    buf[n - 1] = (buf[n - 1] + 3 - 3 * n) & 0xFF
+    for i in range(n - 2, 0, -1):
+        buf[i] = (buf[i] - 3 * i - buf[i + 1]) & 0xFF
+    buf[0] = (buf[0] - buf[1]) & 0xFF
+
+def main() -> int:
+    if len(sys.argv) != 3:
+        print(f"Usage: {sys.argv[0]} <encrypted_in> <decrypted_out>", file=sys.stderr)
+        return 1
+    with open(sys.argv[1], "rb") as f:
+        data = bytearray(f.read())
+    decrypt(data)
+    with open(sys.argv[2], "wb") as f:
+        f.write(data)
+    print(f"decrypted {len(data)} bytes -> {sys.argv[2]}")
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+~~~
+
+### 4803390 — 2026-09-18 18:48（回覆 FUSEdev — pt.2 會先簡短交代 user-mode 服務與 bootstrapper，重點放在 EOS payload）
+
+[quote]
+
+					Originally Posted by **FUSEdev**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4803228.html#post4803228)
+
+				the usermode service isnt as interesting as the manual mapped usermode is... id suggest mostly focussing on that.
+
+yes, I'll talk briefly about the usermode service and EOS bootstrapper just to have a complete picture on who, when and how the EOS payload is injected into the game.
+Then, the focus will be directed fully onto the EOS payload reversal.
+
+### 4804267 — 2026-09-19 18:23（回覆 SoftcoreEXE — pt.1 會持續更新，每次都會貼 changelog）
+
+[quote]
+
+					Originally Posted by **SoftcoreEXE**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4804244.html#post4804244)
+
+				man this is the good stuff, first time i have seen anyone actually map what eos queries instead of just guessing. the pci call counts and the ata identify bit are exactly what i have been looking for.
+
+one question, do parts 2/3 get into the runtime side? like what eos does to devices when a match actually starts vs the init enumeration you covered here. that is the part i cannot find documented anywhere. either way, appreciate you posting this.
+
+Pt. 2 will focus on usermode side. Pt. 1 will be continuously updated, I'll post a changelog every time the OP is updated.
+
+### 4808233 — 2026-09-23 17:51（回覆 ExFreePool — 提供 Discord 聯絡方式）
+
+[quote]
+
+					Originally Posted by **ExFreePool**
+					[](https://www.unknowncheats.me/forum/anti-cheat-research/772181-inside-eac-eos-driver-hardware-identity-collection-kernel-telemetry-cpu-probes-post4808207.html#post4808207)
+
+				hey do u have discord ive done alot of changes to my hypervisor from ur posts and now its very seemless and perfect for EAC ( didnt have issues before ) just had detection vectors what ur posts helped me get rid off id be happy to slide some $$$ ur way.
+
+my github profile has a link to my discord profile.
+
+---
+
+## 附錄 A：討論串完整索引（72 篇）
 
 僅列出貼文編號、作者、時間與開頭摘要，方便回頭定位原始討論。
 
 | # | 作者 | 時間 | 開頭 |
 |---|---|---|---|
-| #1 | lauralex **(封存)** | 15th September 2026 01:48 PM | **Inside EAC/EOS driver: hardware identity collection, kernel telemetry and CPU probes** Inside EAC/EOS driver |
+| #1 | lauralex **(封存)** | 15th September 2026 01:48 PM | Inside EAC/EOS driver: hardware identity, kernel telemetry, PCI/ACPI inspection and CPU probes (pt. 1) I've be… |
 | #2 | SecretPaster | 15th September 2026 02:24 PM | Missed quite a bit, but this is actually useful compared to what was released here the past year. Good job |
-| #3 | lauralex | 15th September 2026 02:28 PM | Originally Posted by **SecretPaster** (Post 4800176) Missed quite a bit, but this is actually useful compared  |
-| #4 | FUSEdev | 15th September 2026 02:33 PM | Originally Posted by **lauralex** (Post 4800179) Yeah, this is only pt.1, also I [removed]ed up the writeup. I |
-| #5 | lauralex | 15th September 2026 03:37 PM | Originally Posted by **FUSEdev** (Post 4800184) could you perchance upload some of the logs? Unfortunately the |
-| #6 | rhaym | 15th September 2026 05:01 PM | Moderator note ([rhaym](https://www.unknowncheats.me/forum/members/6262081.html)) ![img](images/icons/mod_excl |
-| #7 | lolz5465az | 15th September 2026 06:49 PM | Originally Posted by **lauralex** (Post 4800149) ... very beautiful post, nice job using the tool like it was  |
-| #8 | FUSEdev | 15th September 2026 07:04 PM | Originally Posted by **lauralex** (Post 4800235) Unfortunately the log file of each run is approximately 50 GB |
-| #9 | jaydipm | 15th September 2026 07:13 PM | ur so cool and it's actually formatted nicely even though its massive. see, if you use ai, please use it like  |
-| #10 | lauralex | 15th September 2026 07:33 PM | Originally Posted by **lolz5465az** (Post 4800386) very beautiful post, nice job using the tool like it was in |
+| #3 | lauralex | 15th September 2026 02:28 PM | Yeah, this is only pt.1, also I [removed]ed up the writeup. I'm gonna fix it, there's some stuff missing. [rem… |
+| #4 | FUSEdev | 15th September 2026 02:33 PM | could you perchance upload some of the logs? |
+| #5 | lauralex | 15th September 2026 03:37 PM | Unfortunately the log file of each run is approximately 50 GB |
+| #6 | rhaym | 15th September 2026 05:01 PM | Moderator note (rhaym) This is meant for research use only; not execution. File ApprovedSHA256: 4ad6071c7a35e6… |
+| #7 | lolz5465az | 15th September 2026 06:49 PM | very beautiful post, nice job using the tool like it was intended! curious, i dont get half of these in my vm… |
+| #8 | FUSEdev | 15th September 2026 07:04 PM | ohhh, so there isnt any way to get the logs, right? except if we do the modification exactly as you did, right… |
+| #9 | jaydipm | 15th September 2026 07:13 PM | ur so cool and it's actually formatted nicely even though its massive. see, if you use ai, please use it like… |
+| #10 | lauralex | 15th September 2026 07:33 PM | KEVLAR — Windows environment: Added captured and modeled kernel state, processes, modules, registry keys, file… |
 | #11 | Heashey | 15th September 2026 07:58 PM | felt like i was scrolling for a year, but anyway there is some good information |
-| #12 | lauralex | 15th September 2026 08:04 PM | Originally Posted by **jaydipm** (Post 4800417) ur so cool and it's actually formatted nicely even though its  |
+| #12 | lauralex | 15th September 2026 08:04 PM | thx. Now that AI is a public resource, the quality is based on how well you use this resource. Part 2 will be… |
 | #13 | ecco271k | 15th September 2026 08:19 PM | this is a goldmine and saved me a whole bunch of time, thank you! |
-| #14 | xSquad | 15th September 2026 09:56 PM | The **TPM public material** is similar to what I posted before btw if you capture it at runtime. |
-| #15 | lauralex | 16th September 2026 12:30 AM | Originally Posted by **xSquad** (Post 4800583) The **TPM public material** is similar to what I posted before  |
-| #16 | xSquad | 16th September 2026 12:34 AM | Originally Posted by **lauralex** (Post 4800707) Yeah, I read it. I might do some runtime inspection in pt. 2, |
-| #17 | lauralex | 16th September 2026 09:26 AM | Originally Posted by **xSquad** (Post 4800709) Seems like they are doing the same for Rust (the game) and Fort |
-| #18 | rqhz | 16th September 2026 09:38 AM | Originally Posted by **lauralex** (Post 4800988) Yep. Also, next writeup update will be focused on the unreach |
-| #19 | xSquad | 16th September 2026 11:09 AM | Originally Posted by **rqhz** (Post 4800997) What I also think is funny is that these posts are also good for  |
-| #20 | rqhz | 16th September 2026 11:39 AM | Originally Posted by **xSquad** (Post 4801028) If the **OP/threadstarter** digs deeper, especially focusing on |
-| #21 | xSquad | 16th September 2026 11:47 AM | Originally Posted by **rqhz** (Post 4801048) Yep I dont wanna know how many anticheats reverse their competito |
-| #22 | rqhz | 16th September 2026 11:49 AM | Originally Posted by **xSquad** (Post 4801054) Hahaha, anyway I really like this thread. This is how UC used t |
-| #23 | xSquad | 16th September 2026 11:51 AM | Originally Posted by **rqhz** (Post 4801055) Waiting for the day one of the popular anticheat sources get leak |
-| #24 | ApexCV | 16th September 2026 12:19 PM | Originally Posted by **rqhz** (Post 4800997) What I also think is funny is that these posts are also good for  |
-| #25 | xSquad | 16th September 2026 12:37 PM | Originally Posted by **ApexCV** (Post 4801078) They don't need UC to draw ideas. EAC already implements some s |
-| #26 | alexanderyy | 16th September 2026 01:02 PM | EAC uses RtlVirtualUnwind and RtlLookupFunctionEntry, KEVLAR might not be picking it up. But in a real envirom |
-| #27 | lauralex | 16th September 2026 01:35 PM | Originally Posted by **alexanderyy** (Post 4801107) EAC uses RtlVirtualUnwind and RtlLookupFunctionEntry, KEVL |
-| #28 | alexanderyy | 16th September 2026 01:40 PM | Originally Posted by **lauralex** (Post 4801129) Yeah, trying to figure out why they're not called. Maybe they |
-| #29 | lauralex | 16th September 2026 01:50 PM | Originally Posted by **alexanderyy** (Post 4801132) Here are the RVA's for them on the latest EAC rust version |
-| #30 | WhiteByte | 16th September 2026 08:26 PM | Tbsip_Submit_Command is related to HWID-locking (in EAC's case, HWID‑based game bans) and TPM attestation (det |
-| #31 | xSquad | 16th September 2026 10:04 PM | Originally Posted by **WhiteByte** (Post 4801482) Tbsip_Submit_Command is related to HWID-locking (in EAC's ca |
-| #32 | Volopaz | 17th September 2026 03:21 AM | Really solid work on that thread - the fixed-frame timing experiment around the 61s branch (P185 rollback vs 0 |
+| #14 | xSquad | 15th September 2026 09:56 PM | The TPM public material is similar to what I posted before btw if you capture it at runtime. |
+| #15 | lauralex | 16th September 2026 12:30 AM | Yeah, I read it. I might do some runtime inspection in pt. 2, especially for the usermode component. BTW, the… |
+| #16 | xSquad | 16th September 2026 12:34 AM | Seems like they are doing the same for Rust (the game) and Fortnite related to their TPM. |
+| #17 | lauralex | 16th September 2026 09:26 AM | Yep. Also, next writeup update will be focused on the unreached code paths. Right now I'm measuring some stati… |
+| #18 | rqhz | 16th September 2026 09:38 AM | Very nice post KEVLAR actually a very good tool. What I also think is funny is that these posts are also good… |
+| #19 | xSquad | 16th September 2026 11:09 AM | If the OP/threadstarter digs deeper, especially focusing on detection vectors in ring 0, they will find more i… |
+| #20 | rqhz | 16th September 2026 11:39 AM | Yep I dont wanna know how many anticheats reverse their competitor to find new ways on detecting things. In th… |
+| #21 | xSquad | 16th September 2026 11:47 AM | Hahaha, anyway I really like this thread. This is how UC used to be. Rather than posting/sharing how to bypass… |
+| #22 | rqhz | 16th September 2026 11:49 AM | Waiting for the day one of the popular anticheat sources get leaked. HAHAHAHAHH The difference between that wo… |
+| #23 | xSquad | 16th September 2026 11:51 AM | Quote: Originally Posted by rqhz Waiting for the day one of the popular anticheat sources get leaked. HAHAHAHA… |
+| #24 | ApexCV | 16th September 2026 12:19 PM | They don't need UC to draw ideas. EAC already implements some stuff that is in VGK namely the MSR 0x1D9 BTF fl… |
+| #25 | xSquad | 16th September 2026 12:37 PM | They are still so bad at performance about EAC as well. Even the latest update on Rust + EAC on the latest Win… |
+| #26 | alexanderyy | 16th September 2026 01:02 PM | EAC uses RtlVirtualUnwind and RtlLookupFunctionEntry, KEVLAR might not be picking it up. But in a real envirom… |
+| #27 | lauralex | 16th September 2026 01:35 PM | Yeah, trying to figure out why they're not called. Maybe they're inlined by EAC, so KEVLAR won't log them obvi… |
+| #28 | alexanderyy | 16th September 2026 01:40 PM | Here are the RVA's for them on the latest EAC rust version, if it is any help RtlVirtualUnwind Code: DD2571DD5… |
+| #29 | lauralex | 16th September 2026 01:50 PM | Thx. Also, I let the emulator run for 30 virtual minutes, I guess I don't need to extend it to 1 hour, those f… |
+| #30 | WhiteByte | 16th September 2026 08:26 PM | Tbsip_Submit_Command is related to HWID-locking (in EAC's case, HWID‑based game bans) and TPM attestation (det… |
+| #31 | xSquad | 16th September 2026 10:04 PM | From what I analyzed and tested before, it's kinda challenging because it can break Windows features such as s… |
+| #32 | Volopaz | 17th September 2026 03:21 AM | Really solid work on that thread - the fixed-frame timing experiment around the 61s branch (P185 rollback vs 0… |
 | #33 | SDSyntax | 17th September 2026 04:52 AM | i got lost in this post too, felt like a year like someone said. +rep |
-| #34 | shakro | 17th September 2026 04:59 AM | Ok I just finished scrolling... I was doing that since yesterday. let's see how deep the usermode side goes in |
-| #35 | lolz5465az | 17th September 2026 05:00 AM | Originally Posted by **rqhz** (Post 4801055) Waiting for the day one of the popular anticheat sources get leak |
-| #36 | xSquad | 17th September 2026 08:02 AM | Originally Posted by **lolz5465az** (Post 4801809) soon.. :hump: EAC got updated today btw, maybe they changed |
-| #37 | rqhz | 17th September 2026 08:15 AM | Originally Posted by **xSquad** (Post 4801916) EAC got updated today btw, maybe they changed something. sha-25 |
-| #38 | xSquad | 17th September 2026 08:34 AM | Originally Posted by **rqhz** (Post 4801918) EAC getting scared i was hoping they would fix the performance is |
-| #39 | rqhz | 17th September 2026 11:12 AM | Originally Posted by **xSquad** (Post 4801926) i was hoping they would fix the performance issues but nvm its  |
-| #40 | xSquad | 17th September 2026 11:25 AM | Originally Posted by **rqhz** (Post 4802030) Trust me if u play [removed] Like EFT u will not complain about B |
-| #41 | Swiftik | 17th September 2026 11:45 AM | Originally Posted by **xSquad** (Post 4802041) i havent looked into eft yet but seems like it must be somethin |
-| #42 | xSquad | 17th September 2026 11:59 AM | Originally Posted by **Swiftik** (Post 4802064) it's about a 20-30fps difference on facepunch servers with and |
+| #34 | shakro | 17th September 2026 04:59 AM | Ok I just finished scrolling... I was doing that since yesterday. let's see how deep the usermode side goes in… |
+| #35 | lolz5465az | 17th September 2026 05:00 AM | soon.. they are only called on certain things (from what i know, exceptions) even on my "vm" it isnt called, t… |
+| #36 | xSquad | 17th September 2026 08:02 AM | EAC got updated today btw, maybe they changed something. sha-256: Code: 5F678BD471AC6E00DFE3775805384F5BABEDA8… |
+| #37 | rqhz | 17th September 2026 08:15 AM | Quote: Originally Posted by xSquad EAC got updated today btw, maybe they changed something. sha-256: Code: 5F6… |
+| #38 | xSquad | 17th September 2026 08:34 AM | i was hoping they would fix the performance issues but nvm its still so bad after the latest update |
+| #39 | rqhz | 17th September 2026 11:12 AM | Trust me if u play [removed] Like EFT u will not complain about Bad Performance anymore hahahahahha this game… |
+| #40 | xSquad | 17th September 2026 11:25 AM | i havent looked into eft yet but seems like it must be something external for eft. about rust its cause of eac… |
+| #41 | Swiftik | 17th September 2026 11:45 AM | it's about a 20-30fps difference on facepunch servers with and without eac |
+| #42 | xSquad | 17th September 2026 11:59 AM | mine only drops with eac |
 | #43 | darkmqn121 | 17th September 2026 09:22 PM | good job thx for information +rep |
-| #44 | lauralex **(封存)** | 17th September 2026 10:06 PM | **Changelog - 17 September update** This update keeps the previous writeup intact and adds the findings recove |
-| #45 | ApexCV | 18th September 2026 12:31 AM | Originally Posted by **lauralex** (Post 4802603) Original EOS code: saves the current CR3; copies and modifies |
-| #46 | xSquad | 18th September 2026 09:30 AM | Originally Posted by **lauralex** (Post 4802603) ... i see, looks like they improved the **chain** |
+| #44 | lauralex **(封存)** | 17th September 2026 10:06 PM | Changelog - 17 September update This update keeps the previous writeup intact and adds the findings recovered… |
+| #45 | ApexCV | 18th September 2026 12:31 AM | in short, an old CPU like non-server Skylake has no EPT/NPT hardware virtualization for this, so if they use t… |
+| #46 | xSquad | 18th September 2026 09:30 AM | i see, looks like they improved the chain |
 | #47 | mohameds00a6 | 18th September 2026 11:23 AM | they gonna send bomb to your home lol |
 | #48 | NovaHF | 18th September 2026 01:02 PM | Amazing post, thank you |
-| #49 | FUSEdev | 18th September 2026 01:21 PM | Originally Posted by **lauralex** (Post 4802603) **Changelog - 17 September update** This update keeps the pre |
-| #50 | lauralex | 18th September 2026 02:49 PM | Originally Posted by **FUSEdev** (Post 4803114) Have you also thought about doing this analysis on their userm |
-| #51 | FUSEdev | 18th September 2026 03:54 PM | Originally Posted by **lauralex** (Post 4803166) yes, usermode part will be in pt. 2, it will focus on the use |
-| #52 | lauralex | 18th September 2026 06:48 PM | Originally Posted by **FUSEdev** (Post 4803228) the usermode service isnt as interesting as the manual mapped  |
-| #53 | FUSEdev | 18th September 2026 07:03 PM | Originally Posted by **lauralex** (Post 4803390) yes, I'll talk briefly about the usermode service and EOS boo |
+| #49 | FUSEdev | 18th September 2026 01:21 PM | Have you also thought about doing this analysis on their usermode? you could use something like SOGEN (on gith… |
+| #50 | lauralex | 18th September 2026 02:49 PM | yes, usermode part will be in pt. 2, it will focus on the usermode service (EasyAntiCheat_EOS.exe) and the man… |
+| #51 | FUSEdev | 18th September 2026 03:54 PM | the usermode service isnt as interesting as the manual mapped usermode is... id suggest mostly focussing on th… |
+| #52 | lauralex | 18th September 2026 06:48 PM | yes, I'll talk briefly about the usermode service and EOS bootstrapper just to have a complete picture on who,… |
+| #53 | FUSEdev | 18th September 2026 07:03 PM | seems like a good plan. if you are using SOGEN and need help with making it compatible with eac let me know |
 | #54 | Ketaminess | 18th September 2026 11:56 PM | Good job ! |
 | #55 | jessajoy | 19th September 2026 01:53 PM | hope you can make also for EAC Steam KATHANA bypass |
-| #56 | SoftcoreEXE | 19th September 2026 05:52 PM | man this is the good stuff, first time i have seen anyone actually map what eos queries instead of just guessi |
-| #57 | lauralex | 19th September 2026 06:23 PM | Originally Posted by **SoftcoreEXE** (Post 4804244) man this is the good stuff, first time i have seen anyone  |
+| #56 | SoftcoreEXE | 19th September 2026 05:52 PM | man this is the good stuff, first time i have seen anyone actually map what eos queries instead of just guessi… |
+| #57 | lauralex | 19th September 2026 06:23 PM | Pt. 2 will focus on usermode side. Pt. 1 will be continuously updated, I'll post a changelog every time the OP… |
 | #58 | xxuser | 20th September 2026 04:21 PM | this is actual gold mine, thanks a lot |
 | #59 | vmnotaware | 20th September 2026 05:06 PM | Great post and great use of Ai at least, well done |
-| #60 | ExFreePool | 20th September 2026 05:15 PM | great post. well done. All times are GMT. The time now is 01:10 PM . Page 3 of 4 [<](printthread.php?t=772181& |
-| #61 | lauralex **(封存)** | 22nd September 2026 04:28 PM | **Platform and processor probes (follow-up to the main post)** Continuation of [the main post](https://www.unk |
-| #62 | Daloggz12 | 22nd September 2026 04:31 PM | Originally Posted by **lauralex** (Post 4806980) **Platform and processor probes (follow-up to the main post)* |
-| #63 | xSquad | 22nd September 2026 04:31 PM | Thanks for keeping it up. :You_Rock_Emoticon: |
-| #64 | lauralex **(封存)** | 22nd September 2026 04:31 PM | **Appendix: acquisition sites and the current picture (follow-up to the main post)** Continuation of [the main |
-| #65 | FUSEdev | 22nd September 2026 07:28 PM | Originally Posted by **lauralex** (Post 4806985) **Appendix: acquisition sites and the current picture (follow |
+| #60 | ExFreePool | 20th September 2026 05:15 PM | great post. well done. |
+| #61 | lauralex **(封存)** | 22nd September 2026 04:28 PM | Platform and processor probes (follow-up to the main post) Continuation of the main post, which ran into the f… |
+| #62 | Daloggz12 | 22nd September 2026 04:31 PM | Quote: Originally Posted by lauralex Platform and processor probes (follow-up to the main post) Continuation o… |
+| #63 | xSquad | 22nd September 2026 04:31 PM | Thanks for keeping it up. |
+| #64 | lauralex **(封存)** | 22nd September 2026 04:31 PM | Appendix: acquisition sites and the current picture (follow-up to the main post) Continuation of the main post… |
+| #65 | FUSEdev | 22nd September 2026 07:28 PM | When will you be moving to the usermode, its also interesting |
 | #66 | lauralex | 23rd September 2026 01:54 PM | usermode part is coming |
-| #67 | ExFreePool | 23rd September 2026 05:25 PM | hey do u have discord ive done alot of changes to my hypervisor from ur posts and now its very seemless and pe |
-| #68 | lauralex | 23rd September 2026 05:51 PM | Originally Posted by **ExFreePool** (Post 4808207) hey do u have discord ive done alot of changes to my hyperv |
-| #69 | xSquad | 23rd September 2026 07:26 PM | @[lauralex](https://www.unknowncheats.me/forum/members/214675.html) you should try using [KernelMul](https://w |
+| #67 | ExFreePool | 23rd September 2026 05:25 PM | hey do u have discord ive done alot of changes to my hypervisor from ur posts and now its very seemless and pe… |
+| #68 | lauralex | 23rd September 2026 05:51 PM | my github profile has a link to my discord profile. |
+| #69 | xSquad | 23rd September 2026 07:26 PM | @lauralex you should try using KernelMul for your next write-up. It has two backends (WHP/Hyper-V and Unicorn)… |
 | #70 | 1koohs | 23rd September 2026 10:51 PM | nice job all the way around, especially for how organized and professional the write-ups are, impressive. |
 | #71 | reveriee | 24th September 2026 12:31 AM | generational |
-| #72 | lauralex | 24th September 2026 12:42 AM | Not only usermode EOS runtime module. The emulation system must run EOS driver, EOS runtime, EOS SDK, mock gam |
+| #72 | lauralex | 24th September 2026 12:42 AM | Not only usermode EOS runtime module. The emulation system must run EOS driver, EOS runtime, EOS SDK, mock gam… |
 
 ---
 

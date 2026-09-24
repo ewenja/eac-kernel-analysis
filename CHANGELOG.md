@@ -20,6 +20,13 @@
 
 ### 修正
 
+- 2026-09-24 **全串複驗**（重新抓取討論串全部 4 頁、共 72 篇後逐項檢查）：
+  - 檢查 [uc_eos_driver_writeup_original_en.md](uc_eos_driver_writeup_original_en.md) 的封存忠實度：以「忽略空白與標點的字元流」比對線上版本，Post #44／#61／#64 完全相同，Post #1 的線上內容完整包含於封存檔 → **無缺漏**。並在檔頭補上「擷取方式／內容比對」兩列，以及「print view 會截斷超長貼文（實測 Post #1 只回傳約 16K／170K 字元）」的重抓提醒。
+  - 修正文末討論串索引 72 列的摘要欄：改為取自各篇作者**自己的文字**（改用瀏覽器 DOM 抽掉引言區塊），並移除先前混入的引言開頭與「All times are GMT」頁尾；#、作者、日期三欄未變動，72 列摘要逐列驗證可在對應貼文中找到。
+  - 補強 [uc_eos_driver_writeup_zh_tw.md](uc_eos_driver_writeup_zh_tw.md) 的方法論段：新增作者自列的 **KEVLAR／Unicorn 改造清單**（8 項 KEVLAR ＋ 2 組 Unicorn，貼文編號 4800440）與其「與宿主機 1:1 對齊」的目標。
+  - 補強同一篇的 AI 警語：作者自述 AI 曾「刪掉一些很重要的資訊」（例如所有 MMIO 存取、PCI config 讀取，貼文編號 4800179）。
+  - 補強同一篇的外部質疑段：加入作者回覆的具體內容（手寫 unwinder 跡象、`0x1400DB6FF`、copy-cat `RtlCaptureContext` 的 byte signature、inline 假設、只跑 30 分鐘的理由、NMI storm 仍未解）。
+  - **新增附錄 B**（[uc_eos_driver_writeup_original_en.md](uc_eos_driver_writeup_original_en.md)）：把原作者在四篇長文之外的 **12 篇回覆逐字收錄**，讓導讀引用的貼文編號（`4800440`、`4800179`、`4801129`、`4801141` 等）都能在 repo 內查證，不必連回論壇；原本的討論串索引改標為「附錄 A」。同時修正程式碼區塊的換行（論壇改用 Google PrettyPrint，程式碼每行是 `<li>`，先前的抽取會把它壓成一行）。
 - 修掉會讓「只發布本資料夾」破圖的連結，共 4 處：
   - `README.md` 的導覽移除指向根目錄的 `../README.md`
   - `uc_eos_driver_writeup_zh_tw.md` 的 `../eos_sys_*` 改為資料夾內連結，並移除 `../README.md`
