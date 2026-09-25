@@ -25,10 +25,11 @@
 | [`startup_runtime_analysis.md`](startup_runtime_analysis.md) | 啟動路徑補充筆記 — 整理 `EasyAntiCheat_EOS.sys` 在 startup 階段的 runtime 觀察與可信度判讀 |
 | [`eos_sys_2026_05_static_revalidation.md`](eos_sys_2026_05_static_revalidation.md) | 新版 `EasyAntiCheat_EOS.sys` 樣本再驗證 — 校正 import、section 角色與殼層次的樣本差異 |
 | [`eos_sys_beginner_walkthrough_zh_tw.md`](eos_sys_beginner_walkthrough_zh_tw.md) | 新版 `EasyAntiCheat_EOS.sys` 白話導讀 — 用新手也能跟上的方式整理這一輪靜態重驗證目前已經證明的重點 |
-| [`uc_eos_driver_writeup_zh_tw.md`](uc_eos_driver_writeup_zh_tw.md) | 外部研究導讀 — UnKnoWnCheaTs 社群對 EOS driver 的硬體身分蒐集、核心遙測與 CPU 探針長篇研究，重點整理＋章節對照 |
-| [`uc_eos_driver_writeup_original_en.md`](uc_eos_driver_writeup_original_en.md) | 上述外部研究的原文逐字封存（英文）＋討論串索引；**外部資料，非本 repo 驗證結果** |
+| [`eos_driver_analysis_zh_tw.md`](eos_driver_analysis_zh_tw.md) | 外部研究導讀 — EOS driver 的硬體身分蒐集、核心遙測與 CPU 探針長篇研究，重點整理＋章節對照 |
+| [`SOURCES.md`](SOURCES.md) | **資料來源清單**：作者、時間、網址與各來源用到的部分 |
 | [`CHANGELOG.md`](CHANGELOG.md) | 本資料夾（發布單位）的更新紀錄 |
 | [`eac_tiers_and_community_signal_zh_tw.md`](eac_tiers_and_community_signal_zh_tw.md) | 社群訊號判讀 — 「免費版 vs 完整版」討論的交叉比對：串裡說法 vs 本資料夾的證據、逐條判定，以及「裝了不等於開了」的實例 |
+| [`eac_vs_javelin_zh_tw.md`](eac_vs_javelin_zh_tw.md) | **跨產品對照** — EAC 與 EA Javelin（EAAC）的保護模型、成本結構、可重現性放在一起比較，並列出兩邊不能互套的地方 |
 
 ---
 
@@ -148,9 +149,10 @@
 - [啟動路徑 Runtime 補充筆記 →](startup_runtime_analysis.md)
 - [新版樣本靜態再驗證 →](eos_sys_2026_05_static_revalidation.md)
 - [新版樣本白話導讀 →](eos_sys_beginner_walkthrough_zh_tw.md)
-- [外部研究導讀：EOS driver 的硬體身分蒐集、核心遙測與 CPU 探針 →](uc_eos_driver_writeup_zh_tw.md)
-- [上述外部研究原文封存 →](uc_eos_driver_writeup_original_en.md)
+- [外部研究導讀：EOS driver 的硬體身分蒐集、核心遙測與 CPU 探針 →](eos_driver_analysis_zh_tw.md)
+- [資料來源清單 →](SOURCES.md)
 - [社群訊號判讀：EAC 分級與「裝了不等於開了」 →](eac_tiers_and_community_signal_zh_tw.md)
+- [跨產品對照：EAC vs EA Javelin →](eac_vs_javelin_zh_tw.md)
 
 ---
 
